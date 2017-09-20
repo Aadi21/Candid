@@ -2,6 +2,7 @@ const React = require('react');
 const client = require('../../client');
 
 import {PositionList} from './PositionList';
+import {PositionFilter} from './PositionFilter';
 
 export class PositionListContainer extends React.Component {
 
@@ -23,8 +24,15 @@ export class PositionListContainer extends React.Component {
     }
 
     render() {
+        const divStyle = {
+          'background': '#EEE'
+        };
+
             return (
-    		    <PositionList positions={this.state.positions} />
+                <div className="container-fluid" style={divStyle}>
+                    <PositionFilter />
+                    <PositionList positions={this.state.positions} />
+    		    </div>
     		)
     }
 

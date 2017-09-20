@@ -12,7 +12,7 @@ export class PositionOverviewPage extends React.Component {
 
     render(){
         return (
-            <div className="container-fluid">
+            <div>
                 <PositionHeadBar project={this.state.project}/>
                 <PositionListContainer project={this.state.project} />
             </div>
