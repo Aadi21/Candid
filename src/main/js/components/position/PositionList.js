@@ -1,5 +1,4 @@
 const React = require('react');
-const client = require('../../client');
 
 export class PositionList extends React.Component {
 

@@ -3,7 +3,8 @@ const ReactDOM = require('react-dom');
 const client = require('./client');
 
 import {CreatePositionForm} from './components/position/CreatePositionForm';
-import {PositionListContainer} from './components/position/PositionListContainer';
+import {PositionOverviewPage} from './components/position/PositionOverviewPage';
+import {NavBar} from './components/nav/NavBar'
 
 class App extends React.Component {
 
@@ -26,14 +27,15 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div className="container-fluid">
-                <CandidateList candidates={this.state.candidates} />
-                <div className="row">
-                    <div className="col-sm-4">
-                        <PositionListContainer />
-                    </div>
-                    <div className="col-sm-8">
-                        <CreatePositionForm />
+			<div>
+			    <NavBar />
+			    <PositionOverviewPage />
+                <div className="container-fluid">
+                    <CandidateList candidates={this.state.candidates} />
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <CreatePositionForm />
+                        </div>
                     </div>
                 </div>
 			</div>
