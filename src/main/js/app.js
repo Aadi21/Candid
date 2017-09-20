@@ -3,7 +3,7 @@ const ReactDOM = require('react-dom');
 const client = require('./client');
 
 import {CreatePositionForm} from './components/position/CreatePositionForm';
-import {PositionList} from './components/position/PositionList';
+import {PositionListContainer} from './components/position/PositionListContainer';
 
 class App extends React.Component {
 
@@ -16,10 +16,6 @@ class App extends React.Component {
     reloadData(){
         client({method: 'GET', path: '/api/candidates'}).done(response => {
             this.setState({candidates: response.entity._embedded.candidates});
-        });
-
-        client({method: 'GET', path: '/api/positions'}).done(response => {
-            this.setState({positions: response.entity._embedded.positions});
         });
     }
 
@@ -34,7 +30,7 @@ class App extends React.Component {
                 <CandidateList candidates={this.state.candidates} />
                 <div className="row">
                     <div className="col-sm-4">
-                        <PositionList positions={this.state.positions} />
+                        <PositionListContainer />
                     </div>
                     <div className="col-sm-8">
                         <CreatePositionForm />
