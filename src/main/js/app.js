@@ -10,24 +10,36 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {candidates: [], positions: []};
+		this.reloadData = this.reloadData.bind(this);
 	}
 
-	componentDidMount() {
-		client({method: 'GET', path: '/api/candidates'}).done(response => {
-			this.setState({candidates: response.entity._embedded.candidates});
-		});
+    reloadData(){
+        client({method: 'GET', path: '/api/candidates'}).done(response => {
+            this.setState({candidates: response.entity._embedded.candidates});
+        });
 
-		client({method: 'GET', path: '/api/positions'}).done(response => {
+        client({method: 'GET', path: '/api/positions'}).done(response => {
             this.setState({positions: response.entity._embedded.positions});
         });
+    }
+
+	componentDidMount() {
+	    this.reloadData();
+		setInterval(this.reloadData, 2000);
 	}
 
 	render() {
 		return (
 			<div className="container-fluid">
                 <CandidateList candidates={this.state.candidates} />
-                <PositionList positions={this.state.positions} />
-                <CreatePositionForm />
+                <div className="row">
+                    <div className="col-sm-4">
+                        <PositionList positions={this.state.positions} />
+                    </div>
+                    <div className="col-sm-8">
+                        <CreatePositionForm />
+                    </div>
+                </div>
 			</div>
 		)
 	}

@@ -11,7 +11,7 @@ export class CreatePositionForm extends React.Component {
                     position: {
                           roleName     : "",
                           description  : "",
-                          requiredSkills : [],
+                          requiredSkills : "",
                           minExperienceInYrsRequired      : 1,
                           salaryMax   : 5000,
                           status: "OPEN"
@@ -31,6 +31,13 @@ export class CreatePositionForm extends React.Component {
         this.setState({
             position: fields
         });
+        if(this.allStepsCompleted()){
+            this.savePosition(this.state.position);
+        }
+    }
+
+    allStepsCompleted(){
+       return this.state.step >= 2;
     }
 
     nextStep(){
@@ -135,7 +142,7 @@ class PositionDetailsFields extends React.Component {
             </div>
             <div className="form-group">
                 <label>Salary Max</label>
-                <select multiple
+                <select
                     name="requiredSkills" className="form-control"
                     value={ this.props.fieldValues.requiredSkills }
                     onChange={this.handleInputChange} >
@@ -147,7 +154,7 @@ class PositionDetailsFields extends React.Component {
                </select>
             </div>
             <div className="form-group">
-                <button type="button" className="btn" onClick={ this.saveAndContinue }>Save and Continue</button>
+                <button type="button" className="btn" onClick={this.saveAndContinue}>Save and Continue</button>
             </div>
           </div>)
     }

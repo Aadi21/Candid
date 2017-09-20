@@ -17,13 +17,13 @@ export class PositionList extends React.Component {
 
 class Position extends React.Component {
     render() {
-        return (<div className="list-group-item list-group-item-action flex-column align-items-start active">
+        return (<div className="list-group-item list-group-item-action flex-column align-items-start">
                     <div className="d-flex w-100 justify-content-between">
                         <h5 className="mb-1">{this.props.position.roleName}</h5>
                         <small>{this.props.position.status}</small>
-                        <p className="mb-1">{this.props.position.description}</p>
-                        <small>Other Content</small>
                     </div>
+                    <p className="mb-1">{this.props.position.description}</p>
+                    <small>Other Content</small>
                 </div>
                 );
     }
