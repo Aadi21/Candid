@@ -1,37 +1,25 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
-const client = require('./client');
+
 
 import {CreatePositionForm} from './components/position/CreatePositionForm';
 import {PositionOverviewPage} from './components/position/PositionOverviewPage';
+import {CandidateOverviewPage} from './components/candidate/CandidateOverviewPage';
 import {NavBar} from './components/nav/NavBar'
 
 class App extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {candidates: [], positions: []};
-		this.reloadData = this.reloadData.bind(this);
-	}
-
-    reloadData(){
-        client({method: 'GET', path: '/api/candidates'}).done(response => {
-            this.setState({candidates: response.entity._embedded.candidates});
-        });
-    }
-
-	componentDidMount() {
-	    this.reloadData();
-		setInterval(this.reloadData, 2000);
 	}
 
 	render() {
 		return (
 			<div>
 			    <NavBar />
+			    <CandidateOverviewPage />
 			    <PositionOverviewPage />
                 <div className="container-fluid">
-                    <CandidateList candidates={this.state.candidates} />
                     <div className="row">
                         <div className="col-sm-12">
                             <CreatePositionForm />
