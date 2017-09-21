@@ -8,9 +8,11 @@ export class PositionFilter extends React.Component {
 
     render(){
         return (
-                <div className="container">
-                    <div className="row">
-                        <input type="text" placeholder="search..." />
+                <div className="container-fluid py-3 px-0">
+                    <div className="d-flex justify-content-end">
+                        <div className="mr-auto py-2"><input type="text" placeholder="search..." /></div>
+                        <div className="p-2">All Locations</div>
+                        <div className="p-2">All Stream</div>
                     </div>
                 </div>)
     }

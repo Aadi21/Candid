@@ -13,11 +13,11 @@ export class PositionHeadBar extends React.Component {
 
         return (
             <ul className="nav" style={divStyle}>
-               <li className="nav-item">
+               <li className="nav-item mr-auto">
                     <a className="nav-link active" href="#">{this.props.project}</a>
                 </li>
                 <li className="nav-item">
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="button">Add Position</button>
+                    <button className="btn btn-outline-success btn-sm my-2 mx-2" type="button">Add Position</button>
                 </li>
             </ul>
         );

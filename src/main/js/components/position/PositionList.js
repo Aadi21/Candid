@@ -16,10 +16,10 @@ export class PositionList extends React.Component {
 
 class Position extends React.Component {
     render() {
-        return (<div className="list-group-item list-group-item-action flex-column align-items-start">
+        return (<div className="list-group-item mb-3 list-group-item-action flex-column align-items-start">
                     <div className="d-flex w-100 justify-content-between">
-                        <h5 className="mb-1">{this.props.position.roleName}</h5>
-                        <small>{this.props.position.status}</small>
+                        <h5 className="mb-1 text-capitalize">{this.props.position.roleName}</h5>
+                        <p><span className="badge badge-info">{this.props.position.status}</span></p>
                     </div>
                     <p className="mb-1">{this.props.position.description}</p>
                     <small>Other Content</small>
