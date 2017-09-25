@@ -14,7 +14,11 @@ export class PositionListContainer extends React.Component {
 
     componentDidMount(){
         this.loadData();
-        setInterval(this.loadData, 2000);
+        this.poller = setInterval(this.loadData, 2000);
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.poller);
     }
 
     loadData(){

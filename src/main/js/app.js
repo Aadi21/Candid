@@ -1,8 +1,8 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
-import {CreatePositionForm} from './components/position/CreatePositionForm';
 import {PositionOverviewPage} from './components/position/PositionOverviewPage';
 import {CandidateOverviewPage} from './components/candidate/CandidateOverviewPage';
 import {NavBar} from './components/nav/NavBar'
@@ -15,18 +15,13 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div>
-			    <NavBar />
-			    <CandidateOverviewPage />
-			    <PositionOverviewPage />
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <CreatePositionForm />
-                        </div>
-                    </div>
+			<Router>
+                <div>
+                    <NavBar />
+                    <Route path="/candidate" component={CandidateOverviewPage}/>
+                    <Route path="/position" component={PositionOverviewPage}/>
                 </div>
-			</div>
+			</Router>
 		)
 	}
 }
