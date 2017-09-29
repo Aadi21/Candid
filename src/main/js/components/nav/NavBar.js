@@ -1,5 +1,5 @@
 const React = require('react');
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 
 export class NavBar extends React.Component {
@@ -15,13 +15,13 @@ export class NavBar extends React.Component {
                   <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                       <li className="nav-item">
-                        <Link className="nav-link" to="/">Dashboard</Link>
-                      </li>
-                      <li className="nav-item active">
-                        <Link className="nav-link" to="/position">Position</Link>
+                        <NavLink className="nav-link" activeClassName="active" to="/Dashboard">Dashboard</NavLink>
                       </li>
                       <li className="nav-item">
-                        <Link className="nav-link" to="/candidate">Candidate</Link>
+                        <NavLink className="nav-link" activeClassName="active" to="/position">Position</NavLink>
+                      </li>
+                      <li className="nav-item">
+                        <NavLink className="nav-link" activeClassName="active" to="/candidate">Candidate</NavLink>
                       </li>
                     </ul>
                     <form className="form-inline my-2 my-lg-0">

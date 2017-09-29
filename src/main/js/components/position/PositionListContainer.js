@@ -8,8 +8,9 @@ export class PositionListContainer extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = {positions: []};
+        this.state = {positions: [], searchText: ''};
         this.loadData = this.loadData.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
     }
 
     componentDidMount(){
@@ -27,6 +28,10 @@ export class PositionListContainer extends React.Component {
         });
     }
 
+    handleSearch(searchText){
+        this.setState({searchText: searchText})
+    }
+
     render() {
         const divStyle = {
           'background': '#EEE'
@@ -34,8 +39,8 @@ export class PositionListContainer extends React.Component {
 
             return (
                 <div className="container-fluid" style={divStyle}>
-                    <PositionFilter />
-                    <PositionList positions={this.state.positions} />
+                    <PositionFilter handleSearch={this.handleSearch}/>
+                    <PositionList searchText={this.state.searchText} positions={this.state.positions} />
     		    </div>
     		)
     }

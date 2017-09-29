@@ -2,19 +2,25 @@ const React = require('react');
 
 export class PositionList extends React.Component {
 
+    constructor(props) {
+        super(props);
+    }
+
     render() {
-            var positions = this.props.positions.map(p =>
-    			<Position key={p._links.self.href} position={p}/>
-    		);
-    		return (
-    			<div className="list-group">
-    					{positions}
-    			</div>
-    		)
+        var searchText = this.props.searchText;
+        var positions = this.props.positions
+                            .filter(p => p.roleName != '' && p.roleName.indexOf(searchText) !== -1)
+                            .map(p => <Position key={p._links.self.href} position={p}/> );
+    	return (
+    	    <div className="list-group">
+    		    {positions}
+    		</div>
+    	)
     }
 }
 
 class Position extends React.Component {
+
     render() {
         return (<div className="list-group-item mb-3 list-group-item-action flex-column align-items-start">
                     <div className="d-flex w-100 justify-content-between">
