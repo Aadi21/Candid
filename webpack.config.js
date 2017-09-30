@@ -1,6 +1,11 @@
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+
+var extractPlugin = new ExtractTextPlugin ({
+                filename: path.resolve(__dirname, 'target/classes/static/built/main.css')
+            });
+
 module.exports = {
     entry: './src/main/js/app.js',
     devtool: 'sourcemaps',
@@ -26,9 +31,6 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-        new ExtractTextPlugin ({
-            filename: path.resolve(__dirname, 'target/classes/static/built/main.css')
-        });
+    plugins: [ extractPlugin
     ]
 };

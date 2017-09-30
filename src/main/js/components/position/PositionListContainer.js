@@ -23,7 +23,8 @@ export class PositionListContainer extends React.Component {
     }
 
     loadData(){
-        client({method: 'GET', path: '/api/positions'}).done(response => {
+        client({method: 'GET', path: '/api/positions?projection=inlineSkills'})
+        .done(response => {
             this.setState({positions: response.entity._embedded.positions});
         });
     }

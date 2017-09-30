@@ -7,14 +7,15 @@ export class CreatePositionContainer extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = {position: {
+        this.state = {  position: {
                               roleName     : "",
                               description  : "",
-                              requiredSkills : [],
                               minExperienceInYrsRequired      : 1,
                               salaryMax   : 5000,
                               status: "OPEN"
-                              }
+                              },
+                        possibleSkills: [],
+                        requiredSkills: []
                      };
         this.positionData ={};
         this.savePosition = this.savePosition.bind(this);
@@ -22,24 +23,40 @@ export class CreatePositionContainer extends React.Component {
         this.handleAutocompleteChange = this.handleAutocompleteChange.bind(this);
     }
 
+    componentDidMount(){
+        client({method: 'GET', path: '/api/skills'})
+        .done(response => {
+            this.setState({possibleSkills: response.entity._embedded.skills})
+        });
+    }
+
     savePosition(){
         client({method: 'POST',
                 path: '/api/positions',
                 entity: this.positionData,
                 headers: {'Content-Type': 'application/json'}
+        })
+        .done(response => {
+            var requiredSkillsPath = response.entity._links.requiredSkills.href;
+            var associatedSkills = this.state.requiredSkills;
+            client({method: 'PUT',
+                    path: requiredSkillsPath,
+                    entity: associatedSkills,
+                    headers: {'Content-Type': 'text/uri-list'}
+            });
         });
+
     }
 
     handleInputChange(e){
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
-        console.log(value);
         this.positionData[target.name] = value;
     }
 
     handleAutocompleteChange(skills){
-            this.positionData['requiredSkills'] = skills;
-        }
+        this.setState({'requiredSkills': skills});
+    }
 
     render(){
         return (<div className="modal fade" id="positionCreateModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -92,7 +109,11 @@ export class CreatePositionContainer extends React.Component {
                         <div className="form-group row">
                             <label  className="col-sm-4 col-form-label">Skills</label>
                             <div className="col-sm-8">
-                                <AutoComplete defaultSelected={this.state.position.requiredSkills} options={["Java","Scala","Hibernate","Oracle"]} onChange={this.handleAutocompleteChange}/>
+                                <AutoComplete
+                                    labelKey={option => `${option.name}`}
+                                    defaultSelected={this.state.position.requiredSkills}
+                                    options={this.state.possibleSkills}
+                                    onChange={this.handleAutocompleteChange}/>
                             </div>
                         </div>
                         </div>

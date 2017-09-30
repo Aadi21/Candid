@@ -10,10 +10,9 @@ export class AutoComplete extends React.Component {
     render() {
         return (
             <Typeahead
-                allowNew
                 multiple
                 clearButton
-                newSelectionPrefix={this.props.newSelectionPrefix}
+                labelKey={this.props.labelKey}
                 options={this.props.options}
                 placeholder={this.props.placeholder}
                 onChange={this.props.onChange}
