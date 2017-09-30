@@ -13,6 +13,11 @@ module.exports = {
         path: path.resolve(__dirname, 'target/classes/static/built'),
         filename: 'bundle.js'
     },
+    resolve: {
+        alias: {
+            'typeahead_csss': path.resolve(__dirname, "node_modules/react-bootstrap-typeahead/css/Typeahead.css")
+        }
+    },
     module: {
         loaders: [
             {
@@ -24,6 +29,10 @@ module.exports = {
                 }
             },
             {
+                test: /\.css$/,
+                use: [ 'style-loader', 'css-loader' ]
+            },
+            {
                 test: /\.scss$/,
                 loader: extractPlugin.extract({
                     use: ['css-loader','sass-loader']
@@ -31,6 +40,7 @@ module.exports = {
             }
         ]
     },
-    plugins: [ extractPlugin
+    plugins: [
+        extractPlugin
     ]
 };

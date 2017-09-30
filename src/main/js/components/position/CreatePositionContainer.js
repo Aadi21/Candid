@@ -15,19 +15,24 @@ export class CreatePositionContainer extends React.Component {
                               status: "OPEN"
                               },
                         possibleSkills: [],
-                        requiredSkills: []
+                        requiredSkills: [],
+                        interviewRounds: []
                      };
         this.positionData ={};
+        this.loadSkills = this.loadSkills.bind(this);
         this.savePosition = this.savePosition.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleAutocompleteChange = this.handleAutocompleteChange.bind(this);
     }
 
-    componentDidMount(){
+    loadSkills(){
         client({method: 'GET', path: '/api/skills'})
         .done(response => {
             this.setState({possibleSkills: response.entity._embedded.skills})
         });
+    }
+    componentDidMount(){
+        this.loadSkills();
     }
 
     savePosition(){
@@ -59,8 +64,8 @@ export class CreatePositionContainer extends React.Component {
     }
 
     render(){
-        return (<div className="modal fade" id="positionCreateModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div className="modal-dialog" role="document">
+        return (<div className="modal fade" id="positionCreateModal" tabIndex="-1" role="dialog">
+                  <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
                       <div className="modal-header">
                         <h5 className="modal-title" id="positionModalLabel">Create New Position</h5>
@@ -69,54 +74,59 @@ export class CreatePositionContainer extends React.Component {
                         </button>
                       </div>
                       <div className="modal-body">
+                        <legend><small>Position</small></legend>
                         <div className="container">
-                        <div className="form-group row">
-                            <label  className="col-sm-4 col-form-label">Role Name</label>
-                            <div className="col-sm-8">
-                                <input type="text"  className="form-control"
-                                    name="roleName"
-                                    defaultValue={this.state.position.roleName}
-                                    onChange={this.handleInputChange} />
-                             </div>
-                        </div>
-                        <div className="form-group row">
-                            <label  className="col-sm-4 col-form-label">Description</label>
-                            <div className="col-sm-8">
-                                <input type="text"  className="form-control"
-                                    name="description"
-                                    defaultValue={ this.state.position.description }
-                                    onChange={this.handleInputChange} />
-                             </div>
-                        </div>
-                        <div className="form-group row">
-                            <label  className="col-sm-4 col-form-label">Min Experience Required</label>
-                            <div className="col-sm-8">
-                                <input type="number" className="form-control"
-                                    name="minExperienceInYrsRequired"
-                                    defaultValue={this.state.position.minExperienceInYrsRequired}
-                                    onChange={this.handleInputChange} />
-                             </div>
-                        </div>
-                        <div className="form-group row">
-                            <label  className="col-sm-4 col-form-label">Salary Max</label>
-                            <div className="col-sm-8">
-                                <input type="number"
-                                    name="salaryMax" className="form-control"
-                                    defaultValue={ this.state.position.salaryMax }
-                                    onChange={this.handleInputChange} />
-                             </div>
-                        </div>
-                        <div className="form-group row">
-                            <label  className="col-sm-4 col-form-label">Skills</label>
-                            <div className="col-sm-8">
-                                <AutoComplete
-                                    labelKey={option => `${option.name}`}
-                                    defaultSelected={this.state.position.requiredSkills}
-                                    options={this.state.possibleSkills}
-                                    onChange={this.handleAutocompleteChange}/>
+                            <div className="form-group row">
+                                <label  className="col-sm-4 col-form-label">Role Name</label>
+                                <div className="col-sm-8">
+                                    <input type="text"  className="form-control"
+                                        name="roleName"
+                                        defaultValue={this.state.position.roleName}
+                                        onChange={this.handleInputChange} />
+                                 </div>
+                            </div>
+                            <div className="form-group row">
+                                <label  className="col-sm-4 col-form-label">Description</label>
+                                <div className="col-sm-8">
+                                    <input type="text"  className="form-control"
+                                        name="description"
+                                        defaultValue={ this.state.position.description }
+                                        onChange={this.handleInputChange} />
+                                 </div>
+                            </div>
+                            <div className="form-group row">
+                                <label  className="col-sm-4 col-form-label">Experience Required</label>
+                                <div className="col-sm-8">
+                                    <input type="number" className="form-control"
+                                        name="minExperienceInYrsRequired"
+                                        defaultValue={this.state.position.minExperienceInYrsRequired}
+                                        onChange={this.handleInputChange} />
+                                 </div>
+                            </div>
+                            <div className="form-group row">
+                                <label  className="col-sm-4 col-form-label">Salary Max</label>
+                                <div className="col-sm-8">
+                                    <input type="number"
+                                        name="salaryMax" className="form-control"
+                                        defaultValue={ this.state.position.salaryMax }
+                                        onChange={this.handleInputChange} />
+                                 </div>
+                            </div>
+                            <div className="form-group row">
+                                <label  className="col-sm-4 col-form-label">Skills</label>
+                                <div className="col-sm-8">
+                                    <AutoComplete
+                                        labelKey={option => `${option.name}`}
+                                        defaultSelected={this.state.position.requiredSkills}
+                                        options={this.state.possibleSkills}
+                                        onChange={this.handleAutocompleteChange}/>
+                                </div>
                             </div>
                         </div>
-                        </div>
+                        <legend><small>Interview Rounds</small></legend>
+                        <fieldset>
+
+                        </fieldset>
                       </div>
                       <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
