@@ -18,7 +18,14 @@ public class Position extends AbstractAuditable {
     private String roleName;
 
     private String description;
-    private String requiredSkills;
+
+    @ManyToMany
+    @JoinTable(name = "position_skills",
+            joinColumns = @JoinColumn(name="POSITION_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name="SKILL_ID",referencedColumnName = "ID")
+    )
+    private List<Skill> requiredSkills;
+
     private Float minExperienceInYrsRequired;
     private BigDecimal salaryMax;
 
@@ -64,11 +71,11 @@ public class Position extends AbstractAuditable {
         this.minExperienceInYrsRequired = minExperienceInYrsRequired;
     }
 
-    public String getRequiredSkills() {
+    public List<Skill> getRequiredSkills() {
         return requiredSkills;
     }
 
-    public void setRequiredSkills(String requiredSkills) {
+    public void setRequiredSkills(List<Skill> requiredSkills) {
         this.requiredSkills = requiredSkills;
     }
 
