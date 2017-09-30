@@ -1,7 +1,9 @@
+import '../scss/app.scss';
+
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {HashRouter as Router, Route} from 'react-router-dom';
 
 import {PositionOverviewPage} from './components/position/PositionOverviewPage';
 import {CandidateOverviewPage} from './components/candidate/CandidateOverviewPage';

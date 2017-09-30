@@ -12,10 +12,13 @@
   "author": "Aditya Jain",
   "dependencies": {
     "bulma": "^0.5.0",
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.2.2",
-    "rest": "^1.3.1"
+    "rest": "^1.3.1",
+    "sass-loader": "^6.0.6"
   },
   "scripts": {
     "watch": "webpack --watch"
