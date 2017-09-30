@@ -15,7 +15,7 @@ export class NavBar extends React.Component {
                   <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                       <li className="nav-item">
-                        <NavLink className="nav-link" activeClassName="active" to="/Dashboard">Dashboard</NavLink>
+                        <NavLink className="nav-link" activeClassName="active" to="/dashboard">Dashboard</NavLink>
                       </li>
                       <li className="nav-item">
                         <NavLink className="nav-link" activeClassName="active" to="/position">Position</NavLink>

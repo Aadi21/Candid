@@ -1,5 +1,7 @@
 const React = require('react');
 
+import {CreatePositionContainer} from './CreatePositionContainer';
+
 export class PositionHeadBar extends React.Component {
 
     constructor(props){
@@ -17,7 +19,11 @@ export class PositionHeadBar extends React.Component {
                     <a className="nav-link active" href="#">{this.props.project}</a>
                 </li>
                 <li className="nav-item">
-                    <button className="btn btn-outline-success btn-sm my-2 mx-2" type="button">Add Position</button>
+                    <CreatePositionContainer/>
+                    <button type="button" className="btn btn-outline-success btn-sm my-2 mx-2" data-toggle="modal" data-target="#positionCreateModal">
+                      Add Position
+                    </button>
+
                 </li>
             </ul>
         );
