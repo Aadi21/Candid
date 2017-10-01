@@ -23,7 +23,7 @@ class Position extends React.Component {
 
     render() {
         var skills = this.props.position.requiredSkills.map(s =>
-            <span key={s.name} className="badge badge-info">{s.name}</span>
+            <span key={s.name} className="badge badge-info mx-1">{s.name}</span>
         );
 
         return (<div className="list-group-item mb-3 list-group-item-action flex-column align-items-start">
@@ -33,6 +33,7 @@ class Position extends React.Component {
                     </div>
                     <p className="mb-1">{this.props.position.description}</p>
                     {skills}
+                    {this.props.position.client}/{this.props.position.location}/{this.props.position.hireType}
                 </div>
                 );
     }

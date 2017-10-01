@@ -10,6 +10,10 @@ export class CreatePositionContainer extends React.Component {
         this.state = {  position: {
                               roleName     : "",
                               description  : "",
+                              client        : "",
+                              location      : "",
+                              hireType      : "",
+                              project       : "",
                               minExperienceInYrsRequired      : 1,
                               salaryMax   : 5000,
                               status: "OPEN"
@@ -118,6 +122,42 @@ export class CreatePositionContainer extends React.Component {
                                     <input type="text"  className="form-control"
                                         name="description"
                                         defaultValue={ this.state.position.description }
+                                        onChange={this.handleInputChange} />
+                                 </div>
+                            </div>
+                            <div className="form-group form-row">
+                                <label  className="col-sm-3 col-form-label">Client</label>
+                                <div className="col-sm-9">
+                                    <input type="text"  className="form-control"
+                                        name="client"
+                                        defaultValue={ this.state.position.client }
+                                        onChange={this.handleInputChange} />
+                                 </div>
+                            </div>
+                            <div className="form-group form-row">
+                                <label  className="col-sm-3 col-form-label">Location</label>
+                                <div className="col-sm-9">
+                                    <input type="text"  className="form-control"
+                                        name="location"
+                                        defaultValue={ this.state.position.location }
+                                        onChange={this.handleInputChange} />
+                                 </div>
+                            </div>
+                            <div className="form-group form-row">
+                                <label  className="col-sm-3 col-form-label">Project</label>
+                                <div className="col-sm-9">
+                                    <input type="text"  className="form-control"
+                                        name="project"
+                                        defaultValue={ this.state.position.project }
+                                        onChange={this.handleInputChange} />
+                                 </div>
+                            </div>
+                            <div className="form-group form-row">
+                                <label  className="col-sm-3 col-form-label">Hire Type</label>
+                                <div className="col-sm-9">
+                                    <input type="text"  className="form-control"
+                                        name="hireType"
+                                        defaultValue={ this.state.position.hireType }
                                         onChange={this.handleInputChange} />
                                  </div>
                             </div>

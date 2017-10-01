@@ -13,15 +13,13 @@ import java.util.List;
 public interface PositionWithSkills {
 
     String getRoleName();
-
     String getDescription();
-
     Float getMinExperienceInYrsRequired();
-
     List<Skill> getRequiredSkills();
-
     BigDecimal getSalaryMax();
-
     PositionStatus getStatus();
-
+    String getLocation();
+    String getClient();
+    String getProject();
+    PositionType getHireType();
 }

@@ -29,6 +29,13 @@ public class Position extends AbstractAuditable {
     private Float minExperienceInYrsRequired;
     private BigDecimal salaryMax;
 
+    private String location;
+    private String client;
+    private String project;
+
+    @Enumerated(EnumType.STRING)
+    private PositionType hireType;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private PositionStatus status = PositionStatus.OPEN;
@@ -109,5 +116,37 @@ public class Position extends AbstractAuditable {
 
     public void setCandidates(List<Candidate> candidates) {
         this.candidates = candidates;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String project) {
+        this.project = project;
+    }
+
+    public PositionType getHireType() {
+        return hireType;
+    }
+
+    public void setHireType(PositionType hireType) {
+        this.hireType = hireType;
     }
 }
