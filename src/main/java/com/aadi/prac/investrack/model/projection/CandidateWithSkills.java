@@ -10,19 +10,16 @@ import java.util.List;
 /**
  * Created by aadi on 30/9/17.
  */
-@Projection(name="inlineSkills", types={Position.class})
-public interface PositionWithSkills {
+@Projection(name="inlineSkills", types={Candidate.class})
+public interface CandidateWithSkills {
 
-    String getRoleName();
-    String getDescription();
-    Float getMinExperienceInYrsRequired();
-    List<Skill> getRequiredSkills();
-    BigDecimal getSalaryMax();
-    PositionStatus getStatus();
-    String getLocation();
-    String getClient();
-    String getProject();
-    PositionType getHireType();
+    String getName();
+    String getEmail();
+    String getContactNo();
+    Address getAddress();
+    Profile getProfile();
+    Position getAppliedPosition();
+    List<Skill> getSkills();
 
     //Audit
     Instant getCreatedOn();

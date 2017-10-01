@@ -1,7 +1,8 @@
 package com.aadi.prac.investrack.model;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by aadi on 12/9/17.
@@ -9,18 +10,9 @@ import java.math.BigDecimal;
 @Embeddable
 public class Profile {
 
-    private String skills;
     private Float experienceInYrs;
     private BigDecimal expectedPrice;
     private String  resumeContent;
-
-    public String getSkills() {
-        return skills;
-    }
-
-    public void setSkills(String skills) {
-        this.skills = skills;
-    }
 
     public Float getExperienceInYrs() {
         return experienceInYrs;

@@ -1,6 +1,10 @@
 package com.aadi.prac.investrack.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by aadi on 12/9/17.
@@ -15,6 +19,23 @@ public class Candidate extends AbstractAuditable {
     private String contactNo;
     @Embedded private Address address;
     @Embedded private Profile profile;
+
+    @ManyToMany
+    @JoinTable(
+            name = "candidate_skills",
+            joinColumns = @JoinColumn(name="CANDIDATE_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name="SKILL_ID", referencedColumnName = "ID")
+    )
+    private List<Skill> skills;
+
+    public List<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
+    }
+
 
     @ManyToOne
     @JoinColumn(name = "APPLIED_POSITION_ID")
@@ -75,4 +96,6 @@ public class Candidate extends AbstractAuditable {
     public void setAppliedPosition(Position appliedPosition) {
         this.appliedPosition = appliedPosition;
     }
+
+
 }
