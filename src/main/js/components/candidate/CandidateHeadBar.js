@@ -1,5 +1,7 @@
 const React = require('react');
 
+import {CreateCandidateContainer} from './CreateCandidateContainer';
+
 export class CandidateHeadBar extends React.Component {
 
     constructor(props){
@@ -16,7 +18,13 @@ export class CandidateHeadBar extends React.Component {
 
         return (
             <ul className="nav justify-content-center">
-               {filters}
+                {filters}
+                <li className="nav-item ml-auto">
+                    <CreateCandidateContainer/>
+                    <button type="button" className="btn btn-outline-success btn-sm my-2 mx-2" data-toggle="modal" data-target="#candidateCreateModal">
+                        Add Candidate
+                    </button>
+                </li>
             </ul>
         );
     }
