@@ -23,7 +23,7 @@ export class CandidateOverviewPage extends React.Component {
 
     componentDidMount(){
         this.loadData();
-        this.poller = setInterval(this.loadData, 2000);
+        this.poller = setInterval(this.loadData, 200000);
     }
 
     componentWillUnmount(){

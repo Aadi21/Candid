@@ -15,7 +15,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'typeahead_csss': path.resolve(__dirname, "node_modules/react-bootstrap-typeahead/css/Typeahead.css")
+            'react-select_css': path.resolve(__dirname, "node_modules/react-select/dist/react-select.min.css")
         }
     },
     module: {
@@ -25,7 +25,7 @@ module.exports = {
                 exclude: /(node_modules)/,
                 loader: 'babel-loader',
                 query: {
-                    presets: ['es2015', 'react']
+                    presets: ['es2015', 'react','stage-2']
                 }
             },
             {

@@ -1,5 +1,5 @@
 import '../scss/app.scss';
-import 'typeahead_csss';
+import 'react-select_css';
 
 const React = require('react');
 const ReactDOM = require('react-dom');

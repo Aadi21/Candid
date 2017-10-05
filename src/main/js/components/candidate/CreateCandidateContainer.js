@@ -1,125 +1,123 @@
 const React = require('react');
 const client = require('../../client');
 
-import {AutoComplete} from '../common/Autocomplete';
+import FormAutoComplete from '../common/FormAutoComplete';
+import BootLabelField from '../common/BootLabelField';
+
+import { Form, Text, Select, Textarea, Checkbox, Radio, RadioGroup, NestedForm, FormError } from 'react-form'
 
 export class CreateCandidateContainer extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = {  candidate: {
-                              name     : "",
-                              email  : "",
-                              contactNo        : "",
-                              address      : {address1:"", address2:"", city:""},
-                              profile      : {}
-                              },
-                        possibleSkills: [],
-                        candidateSkills: []
+        this.state = {  possibleSkills: []
                      };
+        this.form = {};
         this.loadSkills = this.loadSkills.bind(this);
         this.saveCandidate = this.saveCandidate.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleAutocompleteChange = this.handleAutocompleteChange.bind(this);
     }
 
     loadSkills(){
         client({method: 'GET', path: '/api/skills'})
         .done(response => {
-            this.setState({possibleSkills: response.entity._embedded.skills})
+            this.setState({
+                possibleSkills: response.entity._embedded.skills.map((s) => {
+                    return {'value': s._links.self.href, 'label': s.name};
+                })
+            })
         });
     }
     componentDidMount(){
         this.loadSkills();
     }
 
-    saveCandidate(){
+    saveCandidate(vals){
         client({method: 'POST',
                 path: '/api/candidates',
-                entity: this.state.candidate,
+                entity: vals,
                 headers: {'Content-Type': 'application/json'}
         })
-        .then(response => {return response.entity;})
+        .then(response => response.entity )
         .then(createdCandidate => {
-            if(this.state.candidateSkills.length > 0){
+            if(vals.candidateSkills.length > 0){
                 client({method: 'PUT',
                         path: createdCandidate._links.skills.href,
-                        entity: this.state.candidateSkills,
+                        entity: vals.candidateSkills.map(o => { return {'_links': {'self': {'href': o.value}}}; }),
                         headers: {'Content-Type': 'text/uri-list'}
                 });
             }
         });
     }
 
-    handleInputChange(e){
-            const target = e.target;
-            const value = target.type === 'checkbox' ? target.checked : target.value;
-            this.setState({
-                candidate: Object.assign({}, this.state.candidate, {[target.name]: value} )
-            });
-        }
-
-    handleAutocompleteChange(skills){
-        this.setState({'candidateSkills': skills});
-    }
-
     render(){
+        const AddressForm = (
+                <Form validate={values => {
+                            return {
+                              address1: !values.address1 ? 'A address1 is required' : undefined,
+                              city: !values.city ? 'A city is required' : undefined,
+                              country: !values.country ? 'A country is required' : undefined
+                            }
+                          }}
+                >
+                    <div>
+                        <legend><small>Address</small></legend>
+                        <BootLabelField label="Street" field={<Text field='address1' placeholder='Street' className="form-control"/>} />
+                        <BootLabelField label="City" field={<Text field='city' placeholder='City' className="form-control"/>} />
+                        <BootLabelField label="Country" field={<Text field='country' placeholder='Country' className="form-control"/>} />
+                    </div>
+                </Form>
+            );
+
+        const candidateForm = (
+                <Form ref={e => this.form = e}
+                     onSubmit={this.saveCandidate}
+                     defaultValues={{
+                           name: "",
+                           email:""
+                     }}
+                     validate={values => {
+                         const { name, email } = values
+                         return {
+                                 name: !name ? 'A name is required' : undefined,
+                                 email: !email ? 'A email is required' : undefined
+                         }
+                     }}
+                     onValidationFail={() => {
+                         window.alert('Wrong form');
+                     }}
+                >
+                     {({ values, submitForm, addValue, removeValue, getError }) => {
+                         return (
+                             <form onSubmit={submitForm}>
+                                  <legend><small>Candidate</small></legend>
+                                  <BootLabelField label="Name" field={<Text field='name' placeholder='Name' className="form-control"/>} />
+                                  <BootLabelField label="Email" field={<Text field='email' placeholder='Email' className="form-control"/>} />
+                                  <BootLabelField label="Contact No" field={<Text field='contactNo' placeholder='Contact No' className="form-control"/>} />
+                                  <BootLabelField label="Skills" field={<FormAutoComplete multi={true} field="candidateSkills" options={this.state.possibleSkills} />} />
+                                  <NestedForm field="address">
+                                        {AddressForm}
+                                  </NestedForm>
+                             </form>
+                         )
+                     }}
+                </Form>
+         );
+
         return (<div className="modal fade" id="candidateCreateModal" tabIndex="-1" role="dialog">
                   <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
                       <div className="modal-header">
-                        <h5 className="modal-title" id="candidateModalLabel">Create New Position</h5>
+                        <h5 className="modal-title" id="candidateModalLabel">Create New Candidate</h5>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div className="modal-body">
-                        <legend><small>Candidate</small></legend>
-                        <div className="container">
-                            <div className="form-group form-row">
-                                <label  className="col-sm-3 col-form-label">Name</label>
-                                <div className="col-sm-9">
-                                    <input type="text"  className="form-control"
-                                        name="name"
-                                        defaultValue={this.state.candidate.name}
-                                        onChange={this.handleInputChange} />
-                                 </div>
-                            </div>
-                            <div className="form-group form-row">
-                                <label  className="col-sm-3 col-form-label">e-mail</label>
-                                <div className="col-sm-9">
-                                    <input type="email"  className="form-control"
-                                        name="email"
-                                        defaultValue={this.state.candidate.email}
-                                        onChange={this.handleInputChange} />
-                                 </div>
-                            </div>
-                            <div className="form-group form-row">
-                                <label  className="col-sm-3 col-form-label">Contact No</label>
-                                <div className="col-sm-9">
-                                    <input type="text"  className="form-control"
-                                        name="contactNo"
-                                        defaultValue={ this.state.candidate.contactNo}
-                                        onChange={this.handleInputChange} />
-                                 </div>
-                            </div>
-                            <div className="form-group form-row">
-                                <label  className="col-sm-3 col-form-label">Skills</label>
-                                <div className="col-sm-9">
-                                    <AutoComplete
-                                        labelKey={option => `${option.name}`}
-                                        defaultSelected={this.state.candidateSkills}
-                                        options={this.state.possibleSkills}
-                                        onChange={this.handleAutocompleteChange}/>
-                                </div>
-                            </div>
-                        </div>
-                        <legend><small>Address</small></legend>
-
+                            {candidateForm}
                       </div>
                       <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" className="btn btn-primary" onClick={this.saveCandidate} data-dismiss="modal">Save changes</button>
+                        <button type="submit" className="btn btn-primary" data-dismiss="modal" onClick={this.form.submitForm}>Save changes</button>
                       </div>
                     </div>
                   </div>
@@ -128,6 +126,11 @@ export class CreateCandidateContainer extends React.Component {
 }
 
 //<div className="container">
+// <AutoComplete
+//                                        labelKey={option => `${option.name}`}
+//                                        defaultSelected={this.state.candidateSkills}
+//                                        options={this.state.possibleSkills}
+//                                        onChange={this.handleAutocompleteChange}/>
 //                            <div className="form-group form-row">
 //                                 <label  className="col-sm-3 col-form-label">Address #1</label>
 //                                 <div className="col-sm-9">
